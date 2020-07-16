@@ -7,6 +7,7 @@
 <div class="border rounded-lg container mt-4">
     <div class="">
         <table class="table">
+        {% if not error_message %}
             <thead>
                 <tr>
                     <th>srno</th>
@@ -41,11 +42,16 @@
                 </tr>
             
             </tfoot>
+          {% else %}
+          <h1>{{error_message}}</h1>
+          {% endif %}
             <hr>
             
         </table>
         <div>
+        {% if not error_message %}
             <a data-toggle="modal" data-target="#exampleModal" class="btn btn-block btn-outline-success" href="" class="">CheckOut</a>
+        {% endif %}
         </div>
     </div>
 </div>

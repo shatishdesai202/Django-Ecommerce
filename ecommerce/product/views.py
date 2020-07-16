@@ -90,9 +90,10 @@ class signup(View):
 class Login(View):
 
     return_url = None
+
     def get(self, request):
         Login.returnurl = request.GET.get('return_url')
-        print('url--->',Login.returnurl)
+        print('url--->', Login.returnurl)
         return render(request, 'product/login.html')
 
     def post(self, request):
@@ -133,6 +134,7 @@ def logout(request):
 class Cart(View):
 
     def get(self, request):
+        error_message = None
         cart = request.session.get('cart')
         if cart:
             pass
@@ -140,9 +142,13 @@ class Cart(View):
             request.session['cart'] = {}
 
         ids = request.session.get('cart').keys()
-        print(request.session.get('cart').values())
+        
         product_detail = Product.get_product_detail(ids)
-        context = {'products': product_detail}
+        
+        if len(product_detail) == 0:
+            error_message = "NO PRODUCT IN CART"
+
+        context = {'products': product_detail, 'error_message':error_message}
         return render(request, 'product/cart.html', context)
 
 
